@@ -9,9 +9,14 @@ resource "aws_vpc" "main" {
     Name = "main"
   }
 }
+resource "aws_subnet" "main-subnet" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "172.16.10.0/24"
+}
 
 #Create security group with firewall rules
 resource "aws_security_group" "jenkins-sg-2022" {
+  vpc_id = aws_vpc.main.id
   name        = var.security_group
   description = "security group for Ec2 instance"
 

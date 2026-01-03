@@ -46,7 +46,7 @@ resource "aws_instance" "myFirstInstance" {
   ami           = var.ami_id
   key_name = var.key_name
   instance_type = var.instance_type
-  vpc_security_group_ids = "sg-0dcbe20d16bd43ffe"
+  vpc_security_group_ids = ["sg-0dcbe20d16bd43ffe"]
 
   # Set root volume size to 20 GB
   root_block_device {

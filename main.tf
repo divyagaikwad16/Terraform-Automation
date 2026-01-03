@@ -9,10 +9,14 @@ resource "aws_vpc" "main" {
     Name = "main"
   }
 }
+resource "aws_subnet" "main-subnet" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "172.16.10.0/24"
+}
 
 #Create security group with firewall rules
 resource "aws_security_group" "jenkins-sg-2022" {
-vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.main.id
   name        = var.security_group
   description = "security group for Ec2 instance"
 
@@ -47,7 +51,7 @@ resource "aws_instance" "myFirstInstance" {
   ami           = var.ami_id
   key_name = var.key_name
   instance_type = var.instance_type
-  vpc_security_group_ids = ["sg-0dcbe20d16bd43ffe"]
+  vpc_security_group_ids = [aws_security_group.jenkins-sg-2022.id]
 
   # Set root volume size to 20 GB
   root_block_device {

@@ -13,17 +13,7 @@ pipeline {
             description: 'Git branch to checkout'
         )
     }
-
-    environment {
-        GIT_BRANCH = "${params.BRANCH ?: 'main'}"
-    }
     stages {
-        stage('Display Branch Info') {
-            steps {
-                echo "Pipeline running on branch: ${GIT_BRANCH}"
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout scmGit(branches: [[name: "*/${params.BRANCH}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/divyagaikwad16/Terraform-Automation.git']])
